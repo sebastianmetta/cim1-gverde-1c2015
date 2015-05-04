@@ -41,11 +41,11 @@ public final class ImageWatchQueueReader implements Runnable {
 			WatchKey key = watcher.take();
 			this.run.compareAndSet(false, true);
 			logger.info("El proceso de inspeción de directorios ha sido iniciado.");
+			
 			while (key != null && this.run.get()) {
 				for (WatchEvent<?> event : key.pollEvents()) {
 					logger.info("Se detectó un nuevo archivo: " + event.context());
-					File fileToAnalyze = new File(this.commonProperties.getFilesDirectoryInput(), event.context()
-							.toString());
+					File fileToAnalyze = new File(this.commonProperties.getFilesDirectoryInput(), event.context().toString());
 					if (ImageUtils.fileIsImage(fileToAnalyze)) {
 						AnalysisResult result = imageAnalyzer.analyzeImage(fileToAnalyze);
 						imageLocator.locateImage(fileToAnalyze, result);
@@ -56,7 +56,7 @@ public final class ImageWatchQueueReader implements Runnable {
 				key.reset();
 				key = watcher.take();
 			}
-			this.stopReader();
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ImageLocatorException e) {
