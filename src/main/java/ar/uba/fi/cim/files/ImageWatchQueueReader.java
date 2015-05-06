@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import ar.uba.fi.cim.analysis.AnalysisResult;
 import ar.uba.fi.cim.analysis.ImageAnalyzer;
 import ar.uba.fi.cim.util.CommonProperties;
-import ar.uba.fi.cim.util.ImageUtils;
 
 public final class ImageWatchQueueReader implements Runnable {
 
@@ -46,12 +45,13 @@ public final class ImageWatchQueueReader implements Runnable {
 				for (WatchEvent<?> event : key.pollEvents()) {
 					logger.info("Se detectó un nuevo archivo: " + event.context());
 					File fileToAnalyze = new File(this.commonProperties.getFilesDirectoryInput(), event.context().toString());
-					if (ImageUtils.fileIsImage(fileToAnalyze)) {
+					//FIXME: Deshabilito porque no funciona bien, a futuro implementarlo de otra forma.
+					//if (ImageUtils.fileIsImage(fileToAnalyze)) {
 						AnalysisResult result = imageAnalyzer.analyzeImage(fileToAnalyze);
 						imageLocator.locateImage(fileToAnalyze, result);
-					} else {
-						logger.info("Ignorando el archivo ya que el mismo no es una imagen.");
-					}
+					//} else {
+					//	logger.info("Ignorando el archivo ya que el mismo no es una imagen.");
+					//}
 				}
 				key.reset();
 				key = watcher.take();
