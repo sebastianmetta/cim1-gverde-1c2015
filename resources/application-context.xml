@@ -20,13 +20,16 @@
 		<property name="filesDirectoryOutputRoto" value="${files.directory.output.roto}"></property>
 		<property name="filesDirectoryOutputTamanioGrande" value="${files.directory.output.tamanioGrande}"></property>
 		<property name="filesDirectoryOutputTamanioChico" value="${files.directory.output.tamanioChico}"></property>
+		<property name="filesFilenameAnn" value="${files.filename.ann}"></property>
 	</bean>
 
 	<bean id="imageLocatorBean" class="ar.uba.fi.cim.files.ImageLocator">
 		<constructor-arg ref="commonPropertiesBean" />
 	</bean>
 
-	<bean id="imageAnalyzerBean" class="ar.uba.fi.cim.analysis.ImageAnalyzerImpl" />
+	<bean id="imageAnalyzerBean" class="ar.uba.fi.cim.analysis.ImageAnalyzerImpl">
+		<constructor-arg ref="commonPropertiesBean" />
+	</bean>
 
 	<bean id="filesProccessorBean" class="ar.uba.fi.cim.files.FilesProcessor">
 		<constructor-arg ref="imageAnalyzerBean" />

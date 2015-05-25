@@ -101,7 +101,7 @@ public class Histograma extends Filter{
 	public int[][] getHistograma(){
         Color colorAuxiliar;
         
-        int histogramaReturn[][]=new int[5][256]; /*Creamos la variable que contenga el histograma*/
+        int histogramaReturn[][]=new int[3][256]; /*Creamos la variable que contenga el histograma*/
         
         for( int i = 0; i < this.getBufferImage().getWidth(); i++ ){ //Recorremos los pixels de la imagen
             for( int j = 0; j < this.getBufferImage().getHeight(); j++ ){
