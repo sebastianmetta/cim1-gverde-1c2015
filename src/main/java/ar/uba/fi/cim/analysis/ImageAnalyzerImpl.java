@@ -38,22 +38,9 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 			// BinarizationFilter binFilter = new BinarizationFilter(image);
 			// binFilter.setThreshold(50);
 			// binFilter.doBinirization();
-
 			// Histograma histograma = new Histograma(binFilter.getImg());
+
 			Histograma histograma = new Histograma(image);
-
-			/** Este codigo es solo para poder analizar los histogramas luego no
-			 * es necesario generarlos (OMAR) */
-
-			histograma.mostrarHistograma();
-
-			// BufferedImage histogramImage =
-			// histograma.crearImagenHistograma();
-
-			// ImageUtils.saveImage2File(histogramImage,
-			// file.getParent()+"\\..\\HISTOGRAMA\\histo_"+file.getName());
-
-			/** Fin codigo para quitar (OMAR) */
 
 			int[][] arrayHistograma = histograma.getHistograma();
 
@@ -76,14 +63,6 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 			for (int i = 0; i < NUM_RANGOS; i++) {
 				rangos[i] /= cantPixeles;
 			}
-
-			/** Para debug */
-			System.out.println("CANT_PIX_TOT: " + cantPixeles);
-			for (int i = 1; i <= NUM_RANGOS; i++) {
-				System.out
-						.println("CANT_PIX_RANGO_" + i + ": " + rangos[i - 1]);
-			}
-			/** FIN para debug */
 
 			// Genero el input para la red neuronal
 			neuralNetwork.setInput(rangos[0], rangos[1], rangos[2], rangos[3],
