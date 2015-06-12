@@ -42,8 +42,8 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 
 			int[][] arrayHistograma = histograma.getHistograma();
 
-			double cantPixelesBlancoBinarizacion = arrayHistograma[0][0];
-			double cantPixelesNegroBinarizacion = arrayHistograma[0][255];
+			double cantPixelesBlancoBinarizacion = arrayHistograma[0][255];
+			double cantPixelesNegroBinarizacion = arrayHistograma[0][0];
 			int cantPixelesBinarizacion = (int) (cantPixelesBlancoBinarizacion + cantPixelesNegroBinarizacion);
 			
 			/** Para debug */
