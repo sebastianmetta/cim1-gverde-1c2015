@@ -10,38 +10,54 @@ import javax.imageio.ImageIO;
 
 import ar.uba.fi.cim.filter.BinarizationFilter;
 import ar.uba.fi.cim.filter.Histograma;
+import ar.uba.fi.cim.filter.SobelFilter;
 
 public class Application {
 
-	private static final int NUM_RANGOS = 10;
 	private static FileWriter fileWriter = null;
 
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 
 	private static void procesarImagen(File file, boolean esChico) {
-		BufferedImage image;
 		try {
-			image = ImageIO.read(file);
+			BufferedImage image = ImageIO.read(file);
+
+			// Aplico filtros binarizacion y sobel
 			BinarizationFilter binFilter = new BinarizationFilter(image);
-			binFilter.setThreshold(50);
+			binFilter.setThreshold(50); // TODO aca Omar dijo que se seteaba
+										// inteligentemente
 			binFilter.doBinirization();
-			Histograma histograma = new Histograma(binFilter.getImg());
 
-			int[][] arrayHistograma = histograma.getHistograma();
+			SobelFilter sobelFilter = new SobelFilter(binFilter.getImg());
+			BufferedImage imageSobel = sobelFilter.run();
 
-			double cantPixBlancoBin = arrayHistograma[0][255];
-			double cantPixNegroBin = arrayHistograma[0][0];
-			int cantPix = (int) (cantPixBlancoBin + cantPixNegroBin);
+			// Genero histograma con binarizacion
+			Histograma histogramaBin = new Histograma(binFilter.getImg());
+			int[][] arrayHistogramaBin = histogramaBin.getHistograma();
 
-			// Normalizacion de contadores
-			cantPixBlancoBin /= cantPix;
-			cantPixNegroBin /= cantPix;
+			// Genero histograma con sobel
+			Histograma histogramaSobel = new Histograma(imageSobel);
+			int[][] arrayHistogramaSobel = histogramaSobel.getHistograma();
+
+			// Obtengo cantidad de pixeles en blanco y en negro con binarizacion
+			// y blancos con sobel
+			double cantPixelesBlancoBinarizacion = arrayHistogramaBin[0][255];
+			double cantPixelesNegroBinarizacion = arrayHistogramaBin[0][0];
+			double cantPixelesBlancoSobel = arrayHistogramaSobel[0][255];
+			int cantPixeles = (int) (cantPixelesBlancoBinarizacion + cantPixelesNegroBinarizacion);
+
+			// Normalizacion de cantidad de pixeles
+			cantPixelesBlancoBinarizacion /= cantPixeles;
+			cantPixelesNegroBinarizacion /= cantPixeles;
+			cantPixelesBlancoSobel /= cantPixeles;
 
 			// Generacion csv
-			fileWriter.append(String.format(Locale.US, "%.10f", cantPixBlancoBin));
+			fileWriter.append(String.format(Locale.US, "%.10f", cantPixelesBlancoBinarizacion));
 			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(String.format(Locale.US, "%.10f", cantPixNegroBin));
+			fileWriter.append(String.format(Locale.US, "%.10f", cantPixelesNegroBinarizacion));
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(String.format(Locale.US, "%.10f", cantPixelesBlancoSobel));
 			fileWriter.append(COMMA_DELIMITER);
 
 			if (esChico) {
