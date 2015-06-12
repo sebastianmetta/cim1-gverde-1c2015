@@ -17,7 +17,7 @@ public class BinarizationFilter  extends Filter{
 	private int threshold;
 
 	private BufferedImage bufnew;
-	/** Creates a new instance of Binirization */
+	/** Creates a new instance of Binarization */
 	public BinarizationFilter(BufferedImage newimg) {
 		bufi=this.copyImage(newimg);
 	}
