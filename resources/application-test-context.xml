@@ -31,7 +31,7 @@
 		<constructor-arg ref="commonPropertiesBean" />
 	</bean-->
 	
-	<bean id="imagePruebaSobelBean" class="ar.uba.fi.cim.analysis.ImagePruebaSobelImpl">
+	<bean id="imagePruebaSobelBean" class="ar.uba.fi.cim.test.analysis.ImagePruebaSobelImpl">
 		<constructor-arg ref="commonPropertiesBean" />
 	</bean>
 
