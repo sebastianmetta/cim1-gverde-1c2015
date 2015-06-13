@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context 
+      http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+	<context:property-placeholder location="classpath*:application.properties" />
+
+	<bean id="commonPropertiesBean" class="ar.uba.fi.cim.util.CommonProperties">
+		<property name="filesDirectoryInput" value="${files.directory.input}"></property>
+		<property name="filesDirectoryOutputSano" value="${files.directory.output.sano}"></property>
+		<property name="filesDirectoryOutputRoto" value="${files.directory.output.roto}"></property>
+		<property name="filesDirectoryOutputTamanioGrande" value="${files.directory.output.tamanioGrande}"></property>
+		<property name="filesDirectoryOutputTamanioChico" value="${files.directory.output.tamanioChico}"></property>
+		<property name="filesFilenameAnn" value="${files.filename.ann}"></property>
+	</bean>
+
+	<bean id="imageLocatorBean" class="ar.uba.fi.cim.files.ImageLocator">
+		<constructor-arg ref="commonPropertiesBean" />
+	</bean>
+
+	<!-- bean id="imageAnalyzerBean" class="ar.uba.fi.cim.analysis.ImageAnalyzerImpl">
+		<constructor-arg ref="commonPropertiesBean" />
+	</bean-->
+	
+	<bean id="imagePruebaSobelBean" class="ar.uba.fi.cim.analysis.ImagePruebaSobelImpl">
+		<constructor-arg ref="commonPropertiesBean" />
+	</bean>
+
+	<bean id="filesProccessorBean" class="ar.uba.fi.cim.files.FilesProcessor">
+		<!-- constructor-arg ref="imageAnalyzerBean" /-->
+		<constructor-arg ref="imagePruebaSobelBean" />
+		<constructor-arg ref="commonPropertiesBean" />
+		<constructor-arg ref="imageLocatorBean" />
+	</bean>
+
+</beans>
