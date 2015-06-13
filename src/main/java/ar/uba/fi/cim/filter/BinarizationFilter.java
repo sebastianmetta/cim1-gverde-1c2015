@@ -28,6 +28,25 @@ public class BinarizationFilter  extends Filter{
 	public void setThreshold(int threshold){
 		this.threshold=threshold;
 	}
+	
+	public void setOptimalThreshold(Histograma histograma){
+		
+		this.threshold=getThreshold(histograma);
+	}
+	
+	private int getThreshold(Histograma histograma){
+		int[][] histoArray = histograma.getHistograma();
+		int minValue = Integer.MAX_VALUE;
+		int minPosition = 0;
+		for(int position=50; position <= Histograma.MAX_POSITIONS_HISTOGRAM-50; position++){
+			if(minValue > histoArray[0][position] && histoArray[0][position] > 10){
+				minValue = histoArray[0][position];
+				minPosition = position;
+			}
+		}
+		System.out.println("Posicion minimo:" + minPosition);
+		return minPosition;
+	}
 
 	public int getWidth(){
 		return data.getWidth();

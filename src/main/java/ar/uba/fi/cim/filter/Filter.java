@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class Filter {
 	
+	static final int MAX_POSITIONS_HISTOGRAM = 255;
 	
 	public BufferedImage copyImage(BufferedImage bufferedImage){
 		
