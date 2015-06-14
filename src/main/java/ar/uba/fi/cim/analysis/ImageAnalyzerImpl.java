@@ -35,11 +35,10 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 		logger.info("Analizando imagen: " + file.getAbsolutePath());
 		try {
 			BufferedImage image = ImageIO.read(file);
-
+			
 			// Aplico filtros binarizacion y sobel
 			BinarizationFilter binFilter = new BinarizationFilter(image);
-			binFilter.setThreshold(50); // TODO aca Omar dijo que se seteaba
-										// inteligentemente
+			binFilter.setOptimalThreshold(new Histograma(image));
 			binFilter.doBinirization();
 
 			SobelFilter sobelFilter = new SobelFilter(binFilter.getImg());
