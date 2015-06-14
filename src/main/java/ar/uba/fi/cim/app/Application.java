@@ -25,32 +25,33 @@ public class Application {
 
 			// Aplico filtros binarizacion y sobel
 			BinarizationFilter binFilter = new BinarizationFilter(image);
-			binFilter.setOptimalThreshold(new Histograma(image));
+//			binFilter.setOptimalThreshold(new Histograma(image));
+			binFilter.setThreshold(100);
 			binFilter.doBinirization();
 
-			SobelFilter sobelFilter = new SobelFilter(binFilter.getImg());
-			BufferedImage imageSobel = sobelFilter.run();
+//			SobelFilter sobelFilter = new SobelFilter(binFilter.getImg());
+//			BufferedImage imageSobel = sobelFilter.run();
 
 			// Genero histograma con binarizacion
 			Histograma histogramaBin = new Histograma(binFilter.getImg());
 			int[][] arrayHistogramaBin = histogramaBin.getHistograma();
 
 			// Genero histograma con sobel
-			Histograma histogramaSobel = new Histograma(imageSobel);
-			int[][] arrayHistogramaSobel = histogramaSobel.getHistograma();
+//			Histograma histogramaSobel = new Histograma(imageSobel);
+//			int[][] arrayHistogramaSobel = histogramaSobel.getHistograma();
 
 			// Obtengo cantidad de pixeles en blanco y en negro con binarizacion
 			// y blancos con sobel
 			double cantPixelesBlancoBinarizacion = arrayHistogramaBin[0][255];
 			double cantPixelesNegroBinarizacion = arrayHistogramaBin[0][0];
-			double cantPixelesBlancoSobel = arrayHistogramaSobel[0][255];
+//			double cantPixelesBlancoSobel = arrayHistogramaSobel[0][255];
 			int cantPixeles =
 					(int) (cantPixelesBlancoBinarizacion + cantPixelesNegroBinarizacion);
 
 			// Normalizacion de cantidad de pixeles
 			cantPixelesBlancoBinarizacion /= cantPixeles;
 			cantPixelesNegroBinarizacion /= cantPixeles;
-			cantPixelesBlancoSobel /= cantPixeles;
+//			cantPixelesBlancoSobel /= cantPixeles;
 
 			// Generacion csv
 			fileWriter.append(String.format(Locale.US, "%.10f",
@@ -59,9 +60,9 @@ public class Application {
 			fileWriter.append(String.format(Locale.US, "%.10f",
 					cantPixelesNegroBinarizacion));
 			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(String.format(Locale.US, "%.10f",
-					cantPixelesBlancoSobel));
-			fileWriter.append(COMMA_DELIMITER);
+			// fileWriter.append(String.format(Locale.US, "%.10f",
+			// cantPixelesBlancoSobel));
+			// fileWriter.append(COMMA_DELIMITER);
 
 			if (esChico) {
 				fileWriter.append(String.valueOf(0));
