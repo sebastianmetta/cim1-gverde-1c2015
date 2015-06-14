@@ -25,8 +25,7 @@ public class Application {
 
 			// Aplico filtros binarizacion y sobel
 			BinarizationFilter binFilter = new BinarizationFilter(image);
-			binFilter.setThreshold(50); // TODO aca Omar dijo que se seteaba
-										// inteligentemente
+			binFilter.setOptimalThreshold(new Histograma(image));
 			binFilter.doBinirization();
 
 			SobelFilter sobelFilter = new SobelFilter(binFilter.getImg());
@@ -45,7 +44,8 @@ public class Application {
 			double cantPixelesBlancoBinarizacion = arrayHistogramaBin[0][255];
 			double cantPixelesNegroBinarizacion = arrayHistogramaBin[0][0];
 			double cantPixelesBlancoSobel = arrayHistogramaSobel[0][255];
-			int cantPixeles = (int) (cantPixelesBlancoBinarizacion + cantPixelesNegroBinarizacion);
+			int cantPixeles =
+					(int) (cantPixelesBlancoBinarizacion + cantPixelesNegroBinarizacion);
 
 			// Normalizacion de cantidad de pixeles
 			cantPixelesBlancoBinarizacion /= cantPixeles;
@@ -53,21 +53,26 @@ public class Application {
 			cantPixelesBlancoSobel /= cantPixeles;
 
 			// Generacion csv
-			fileWriter.append(String.format(Locale.US, "%.10f", cantPixelesBlancoBinarizacion));
+			fileWriter.append(String.format(Locale.US, "%.10f",
+					cantPixelesBlancoBinarizacion));
 			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(String.format(Locale.US, "%.10f", cantPixelesNegroBinarizacion));
+			fileWriter.append(String.format(Locale.US, "%.10f",
+					cantPixelesNegroBinarizacion));
 			fileWriter.append(COMMA_DELIMITER);
-			fileWriter.append(String.format(Locale.US, "%.10f", cantPixelesBlancoSobel));
+			fileWriter.append(String.format(Locale.US, "%.10f",
+					cantPixelesBlancoSobel));
 			fileWriter.append(COMMA_DELIMITER);
 
 			if (esChico) {
 				fileWriter.append(String.valueOf(0));
-			} else {
+			}
+			else {
 				fileWriter.append(String.valueOf(1));
 			}
 
 			fileWriter.append(NEW_LINE_SEPARATOR);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			System.out.println("Image " + file.getName() + " failed");
 			e.printStackTrace();
 		}
@@ -79,7 +84,8 @@ public class Application {
 		final File folderGrande = new File(args[1]);
 		try {
 			fileWriter = new FileWriter(args[2]);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			System.out.println("Error in CsvFileWriter !!!");
 			e.printStackTrace();
 			return;
@@ -96,7 +102,8 @@ public class Application {
 		try {
 			fileWriter.flush();
 			fileWriter.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			System.out.println("Error while flushing/closing fileWriter !!!");
 			e.printStackTrace();
 		}
