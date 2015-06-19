@@ -36,11 +36,12 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 		try {
 			BufferedImage image = ImageIO.read(file);
 
+
 			Histograma histograma = new Histograma(image);
 			// Aplico filtros binarizacion y sobel
 			BinarizationFilter binFilter = new BinarizationFilter(image);
-			binFilter.setOptimalThreshold(histograma); 	// TODO aca Omar dijo que se seteaba
-														// inteligentemente
+			binFilter.setOptimalThreshold(histograma); 	
+			
 			binFilter.doBinirization();
 
 			SobelFilter sobelFilter = new SobelFilter(binFilter.getImg());
