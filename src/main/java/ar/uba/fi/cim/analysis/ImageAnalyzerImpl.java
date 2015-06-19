@@ -36,10 +36,11 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 		try {
 			BufferedImage image = ImageIO.read(file);
 
+			Histograma histograma = new Histograma(image);
 			// Aplico filtros binarizacion y sobel
 			BinarizationFilter binFilter = new BinarizationFilter(image);
-			binFilter.setThreshold(50); // TODO aca Omar dijo que se seteaba
-										// inteligentemente
+			binFilter.setOptimalThreshold(histograma); 	// TODO aca Omar dijo que se seteaba
+														// inteligentemente
 			binFilter.doBinirization();
 
 			SobelFilter sobelFilter = new SobelFilter(binFilter.getImg());
@@ -71,8 +72,12 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 			cantPixelesNegroBinarizacion /= cantPixeles;
 			cantPixelesBlancoSobel /= cantPixeles;
 
+			System.out.println("cantPixelesBlancoBinarizacion: " + cantPixelesBlancoBinarizacion);
+			//System.out.println("cantPixelesNegroBinarizacion: " + cantPixelesNegroBinarizacion);
+			System.out.println("cantPixelesBlancoSobel: " + cantPixelesBlancoSobel*100);
+
 			// Genero el input para la red neuronal
-			neuralNetwork.setInput(cantPixelesBlancoBinarizacion, cantPixelesNegroBinarizacion, cantPixelesBlancoSobel);
+			neuralNetwork.setInput(cantPixelesBlancoBinarizacion, /*cantPixelesNegroBinarizacion, */ cantPixelesBlancoSobel*100);
 
 			// Calculo el resultado
 			neuralNetwork.calculate();
@@ -84,7 +89,7 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 			System.out.println("OUTPUT_ANN: " + networkOutput[0]);
 			/** FIN para debug */
 
-			if (networkOutput[0] < 0.5) {
+			if (networkOutput[0] < 0.7) {
 				logger.info("Imagen analizada. El resultado es: " + AnalysisResult.TAM_CHICO);
 				return AnalysisResult.TAM_CHICO;
 			} else {

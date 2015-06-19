@@ -72,3 +72,6 @@ local.properties
 	
 *.log
 *.log
+tmp.jpg
+log/ImageAnalyzer.log
+log/ImageAnalyzer.log
