@@ -59,7 +59,7 @@ public class FilesProcessor {
 					this.imageLocator);
 			Thread th = new Thread(fileWatcher, "ImagesWatcher");
 			th.start();
-
+			logger.info("Sistema iniciado, esperando imagenes en el directorio: " + this.commonProperties.getFilesDirectoryInput());
 			toWatch.register(imageWatcher, StandardWatchEventKinds.ENTRY_CREATE);
 			th.join();
 		} catch (NoSuchFileException e) {

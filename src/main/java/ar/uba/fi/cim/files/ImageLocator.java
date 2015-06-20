@@ -62,7 +62,7 @@ public class ImageLocator {
 	private void moveFile(File toMove, String destinationDirectoy) throws IOException {
 		Path source = Paths.get(this.commonProperties.getFilesDirectoryInput(), toMove.getName());
 		Path target = Paths.get(destinationDirectoy, toMove.getName());
-		Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+		Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
 		logger.info("El archivo " + toMove.getName() + " se movió al directorio " + destinationDirectoy + ".");
 	}
 

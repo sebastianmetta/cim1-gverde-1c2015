@@ -40,25 +40,24 @@ public final class ImageWatchQueueReader implements Runnable {
 			WatchKey key = watcher.take();
 			this.run.compareAndSet(false, true);
 			logger.info("El proceso de inspeción de directorios ha sido iniciado.");
-			
+
 			while (key != null && this.run.get()) {
 				for (WatchEvent<?> event : key.pollEvents()) {
 					logger.info("Se detectó un nuevo archivo: " + event.context());
-					File fileToAnalyze = new File(this.commonProperties.getFilesDirectoryInput(), event.context().toString());
-					//FIXME: Deshabilito porque no funciona bien, a futuro implementarlo de otra forma.
-					//if (ImageUtils.fileIsImage(fileToAnalyze)) {
-						AnalysisResult result = imageAnalyzer.analyzeImage(fileToAnalyze);
-						imageLocator.locateImage(fileToAnalyze, result);
-					//} else {
-					//	logger.info("Ignorando el archivo ya que el mismo no es una imagen.");
-					//}
+					File fileToAnalyze = new File(this.commonProperties.getFilesDirectoryInput(), event.context()
+							.toString());
+					AnalysisResult result = imageAnalyzer.analyzeImage(fileToAnalyze);
+					imageLocator.locateImage(fileToAnalyze, result);
+					fileToAnalyze = null;
 				}
 				key.reset();
 				key = watcher.take();
+				logger.info("Se finalizó el procesamiento del archivo. Aguardando nuevos archivos...");
 			}
-			
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			Thread.currentThread().interrupt();
 		} catch (ImageLocatorException e) {
 			logger.error(e.getMessage());
 		}

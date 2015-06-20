@@ -22,12 +22,11 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 	private NeuralNetwork neuralNetwork;
 
 	public ImageAnalyzerImpl(CommonProperties commonProperties) {
-		/** SEBA: Esto tira excepcion NeurophException. La puedo atrapar aca,
-		 * pero como aviso al runner que no tengo red neuronal? La deberia
-		 * capturar el runner */
-		neuralNetwork =
-				NeuralNetwork.createFromFile(commonProperties
-						.getFilesFilenameAnn());
+		/**
+		 * SEBA: Esto tira excepcion NeurophException. La puedo atrapar aca, pero como aviso al runner que no tengo red
+		 * neuronal? La deberia capturar el runner
+		 */
+		neuralNetwork = NeuralNetwork.createFromFile(commonProperties.getFilesFilenameAnn());
 	}
 
 	@Override
@@ -59,16 +58,14 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 			double cantPixelesBlancoBinarizacion = arrayHistogramaBin[0][255];
 			double cantPixelesNegroBinarizacion = arrayHistogramaBin[0][0];
 			double cantPixelesBlancoSobel = arrayHistogramaSobel[0][255];
-			int cantPixeles =
-					(int) (cantPixelesBlancoBinarizacion + cantPixelesNegroBinarizacion);
+			int cantPixeles = (int) (cantPixelesBlancoBinarizacion + cantPixelesNegroBinarizacion);
 
 			// Normalizacion de cantidad de pixeles
 			cantPixelesBlancoBinarizacion /= cantPixeles;
 			cantPixelesBlancoSobel = cantPixelesBlancoSobel * 100 / cantPixeles;
 
 			// Genero el input para la red neuronal
-			neuralNetwork.setInput(cantPixelesBlancoBinarizacion,
-					cantPixelesBlancoSobel);
+			neuralNetwork.setInput(cantPixelesBlancoBinarizacion, cantPixelesBlancoSobel);
 
 			// Calculo el resultado
 			neuralNetwork.calculate();
@@ -77,19 +74,15 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 			double[] networkOutput = neuralNetwork.getOutput();
 
 			if (networkOutput[0] < 0.7) {
-				logger.info("Imagen analizada. El resultado es: "
-						+ AnalysisResult.TAM_CHICO);
+				logger.info("Imagen analizada. El resultado es: " + AnalysisResult.TAM_CHICO);
 				return AnalysisResult.TAM_CHICO;
-			}
-			else {
-				logger.info("Imagen analizada. El resultado es: "
-						+ AnalysisResult.TAM_GRANDE);
+			} else {
+				logger.info("Imagen analizada. El resultado es: " + AnalysisResult.TAM_GRANDE);
 				return AnalysisResult.TAM_GRANDE;
 			}
-		}
-		catch (IOException e) {
-			logger.info("Error al leer la imagen desde el archivo "
-					+ file.getAbsolutePath());
+
+		} catch (IOException e) {
+			logger.info("Error al leer la imagen desde el archivo " + file.getAbsolutePath());
 			e.printStackTrace();
 		}
 

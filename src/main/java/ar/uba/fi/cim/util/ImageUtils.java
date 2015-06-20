@@ -12,10 +12,12 @@ import org.apache.log4j.Logger;
 public class ImageUtils {
 
 	private static Logger logger = Logger.getLogger(ImageUtils.class);
+
 	/**
 	 * Devuelve <code>true</code> si el archivo es una imagen o <code>false</code> en caso contrario.
 	 * 
-	 * @param file El archivo a analizar.
+	 * @param file
+	 *            El archivo a analizar.
 	 * @return
 	 */
 	public static boolean fileIsImage(File file) {
@@ -29,7 +31,7 @@ public class ImageUtils {
 			return false;
 		}
 	}
-	
+
 	public static void saveImage2File(BufferedImage image, String fileName) throws IOException {
 		logger.info("Save Image: " + fileName);
 		File file = new File(fileName);
