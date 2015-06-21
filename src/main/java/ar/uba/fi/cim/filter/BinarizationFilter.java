@@ -44,7 +44,7 @@ public class BinarizationFilter  extends Filter{
 				minPosition = position;
 			}
 		}
-		System.out.println("Posicion minimo:" + minPosition);
+//		System.out.println("Posicion minimo:" + minPosition);
 		return minPosition;
 	}
 

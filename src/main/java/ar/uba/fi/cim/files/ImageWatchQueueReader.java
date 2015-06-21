@@ -49,10 +49,10 @@ public final class ImageWatchQueueReader implements Runnable {
 					AnalysisResult result = imageAnalyzer.analyzeImage(fileToAnalyze);
 					imageLocator.locateImage(fileToAnalyze, result);
 					fileToAnalyze = null;
+					logger.info("Se finalizó el procesamiento del archivo. Aguardando nuevos archivos...");
 				}
 				key.reset();
 				key = watcher.take();
-				logger.info("Se finalizó el procesamiento del archivo. Aguardando nuevos archivos...");
 			}
 
 		} catch (InterruptedException e) {

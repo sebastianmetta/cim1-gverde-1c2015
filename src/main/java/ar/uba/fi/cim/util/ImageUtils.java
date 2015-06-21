@@ -33,7 +33,6 @@ public class ImageUtils {
 	}
 
 	public static void saveImage2File(BufferedImage image, String fileName) throws IOException {
-		logger.info("Save Image: " + fileName);
 		File file = new File(fileName);
 		try {
 			ImageIO.write(image, "jpg", file);
