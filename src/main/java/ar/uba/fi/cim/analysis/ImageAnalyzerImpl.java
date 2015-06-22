@@ -72,7 +72,7 @@ public class ImageAnalyzerImpl implements ImageAnalyzer {
 
 			// Clasifico la imagen
 			double[] networkOutput = neuralNetwork.getOutput();
-			logger.info("OUTPUT red: " + networkOutput[0]);
+			
 			if (networkOutput[0] < 0.7) {
 				logger.info("Imagen analizada. El resultado es: " + AnalysisResult.TAM_CHICO);
 				return AnalysisResult.TAM_CHICO;

@@ -39,14 +39,7 @@ public class ImageLocator {
 	 *             si la imagen no pudo moverse.
 	 */
 	public void locateImage(File imageToLocate, AnalysisResult analysisResult) throws ImageLocatorException {
-		// TODO: Refactorizar y mejorar este código.
 		try {
-			if (analysisResult.equals(AnalysisResult.ROTO)) {
-				this.moveFile(imageToLocate, this.commonProperties.getFilesDirectoryOutputRoto());
-			}
-			if (analysisResult.equals(AnalysisResult.SANO)) {
-				this.moveFile(imageToLocate, this.commonProperties.getFilesDirectoryOutputSano());
-			}
 			if (analysisResult.equals(AnalysisResult.TAM_CHICO)) {
 				this.moveFile(imageToLocate, this.commonProperties.getFilesDirectoryOutputTamanioChico());
 			}

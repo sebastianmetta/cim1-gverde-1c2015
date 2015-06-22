@@ -6,8 +6,6 @@ package ar.uba.fi.cim.util;
 public class CommonProperties {
 
 	private String filesDirectoryInput;
-	private String filesDirectoryOutputSano;
-	private String filesDirectoryOutputRoto;
 	private String filesDirectoryOutputTamanioGrande;
 	private String filesDirectoryOutputTamanioChico;
 	private String filesFilenameAnn;
@@ -18,22 +16,6 @@ public class CommonProperties {
 
 	public void setFilesDirectoryInput(String filesDirectoryInput) {
 		this.filesDirectoryInput = filesDirectoryInput;
-	}
-
-	public String getFilesDirectoryOutputSano() {
-		return filesDirectoryOutputSano;
-	}
-
-	public void setFilesDirectoryOutputSano(String filesDirectoryOutputSano) {
-		this.filesDirectoryOutputSano = filesDirectoryOutputSano;
-	}
-
-	public String getFilesDirectoryOutputRoto() {
-		return filesDirectoryOutputRoto;
-	}
-
-	public void setFilesDirectoryOutputRoto(String filesDirectoryOutputRoto) {
-		this.filesDirectoryOutputRoto = filesDirectoryOutputRoto;
 	}
 
 	public String getFilesDirectoryOutputTamanioGrande() {

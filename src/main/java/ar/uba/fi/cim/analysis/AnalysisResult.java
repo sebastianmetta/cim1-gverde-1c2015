@@ -10,6 +10,6 @@ package ar.uba.fi.cim.analysis;
  */
 public enum AnalysisResult {
 
-	SANO, ROTO, TAM_GRANDE, TAM_CHICO, INDETERMINADO;
+	TAM_GRANDE, TAM_CHICO, INDETERMINADO;
 
 }

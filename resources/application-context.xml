@@ -16,8 +16,6 @@
 
 	<bean id="commonPropertiesBean" class="ar.uba.fi.cim.util.CommonProperties">
 		<property name="filesDirectoryInput" value="${files.directory.input}"></property>
-		<property name="filesDirectoryOutputSano" value="${files.directory.output.sano}"></property>
-		<property name="filesDirectoryOutputRoto" value="${files.directory.output.roto}"></property>
 		<property name="filesDirectoryOutputTamanioGrande" value="${files.directory.output.tamanioGrande}"></property>
 		<property name="filesDirectoryOutputTamanioChico" value="${files.directory.output.tamanioChico}"></property>
 		<property name="filesFilenameAnn" value="${files.filename.ann}"></property>
